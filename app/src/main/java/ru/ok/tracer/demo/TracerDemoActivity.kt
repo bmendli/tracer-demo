@@ -54,7 +54,11 @@ class TracerDemoActivity : AppCompatActivity(R.layout.activity_tracer_demo) {
 
         }
         findViewById<View>(R.id.make_non_fatal_crash).setOnClickListener {
-            TracerCrashReport.report(IllegalArgumentException("Test exception"), "Test issue key")
+            try {
+                divideByZero()
+            } catch (e: Exception) {
+                TracerCrashReport.report(e, "Test issue key")
+            }
         }
         findViewById<View>(R.id.start_sampled_trace).setOnClickListener {
             SamplingProfiler.start(
